@@ -82,13 +82,8 @@ class Program
 
         displayName = title + " " + fullname;
         
-        SaveData(displayName, age, gender);
+        People.SaveData(people, displayName, age, gender);
         Acknowledge(2);
-    }
-
-    private static void SaveData(string unsavedName, int unsavedAge, string unsavedGender)
-    {
-        people.Add(new People() { name = unsavedName, age = unsavedAge, gender = unsavedGender });
     }
 
     private static void Acknowledge(int option)
@@ -105,6 +100,7 @@ class Program
         } 
         else
         {
+            people.Remove(people[people.Count]);
             Console.WriteLine("Invalid response! Restarting...");
         }
         Thread.Sleep(500);

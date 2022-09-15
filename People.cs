@@ -11,5 +11,10 @@ namespace ConsoleApp2
         public string name { get; set; }
         public int age { get; set; }   
         public string gender { get; set; }
+
+        public static void SaveData(List<People> people, string unsavedName, int unsavedAge, string unsavedGender)
+        {
+            people.Add(new People() { name = unsavedName, age = unsavedAge, gender = unsavedGender });
+        }
     }
 }
