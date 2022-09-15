@@ -8,7 +8,30 @@ class Program
         Thread.Sleep(500);
         Console.Clear();
 
-        People.MainMenu();
+        MainMenu();
+    }
+
+    public static void MainMenu()
+    {
+        Console.WriteLine("\nWhat would you like to do?\na - retrieve all saved data\nb - register a user\nc - save your data to json\nd - load data from json");
+        var option = Console.ReadLine();
+
+        switch (option)
+        {
+            case "a":
+                People.PrintAllData();
+                MainMenu();
+                break;
+            case "b":
+                People.GetData();
+                break;
+            case "c":
+                People.SaveToJson();
+                break;
+            case "d":
+                //JsonSerializer.LoadFromJson();
+                break;
+        }
     }
 
     public static void Acknowledge(int option)
@@ -21,7 +44,7 @@ class Program
         else if (option.Equals(2))
         {
             Console.WriteLine("Thank you! Registration complete.");
-            People.MainMenu();
+            MainMenu();
         } 
         else
         {

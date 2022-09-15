@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
-using Newtonsoft.Json;
-using JsonSerializer = System.Text.Json.JsonSerializer;
+﻿using System.Text.RegularExpressions;
 
 namespace ConsoleApp2
 {
@@ -14,7 +7,6 @@ namespace ConsoleApp2
         private static List<People> people = new();
         private static string userFullname, userDisplayName, userGender, userTitle;
         private static int userAge;
-        private static string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "people.json");
 
         public string name { get; set; }
         public int age { get; set; }   
@@ -31,56 +23,7 @@ namespace ConsoleApp2
 
         public static void SaveToJson()
         {
-            if (File.Exists(filePath)) File.Delete(filePath);
-            string json = JsonSerializer.Serialize(people);
-            string savePath = filePath;
-            File.WriteAllText(savePath, json);
-        }
-
-        public static void LoadFromJson()
-        {
-            if (File.Exists(filePath))
-            {
-                string jsonFile = File.ReadAllText(filePath);
-                var dictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonFile);
-
-                foreach (Dictionary entry in dictionary)
-                {
-                    people.Add(entry);
-                }
-                Console.Clear();
-                Console.WriteLine("Loading your data...\n");
-                Thread.Sleep(500);
-                PrintAllData();
-            }
-            else
-            {
-                Console.WriteLine("Could not find 'people.json' file! Please move your file to the directory: " + AppDomain.CurrentDomain.BaseDirectory.ToString());
-                MainMenu();
-            }
-        }
-
-        public static void MainMenu()
-        {
-            Console.WriteLine("\nWhat would you like to do?\na - retrieve all saved data\nb - register a user\nc - save your data to json\nd - load data from json");
-            var option = Console.ReadLine();
-
-            switch (option)
-            {
-                case "a":
-                    PrintAllData();
-                    MainMenu();
-                    break;
-                case "b":
-                    GetData();
-                    break;
-                case "c":
-                    SaveToJson();
-                    break;
-                case "d":
-                    //LoadFromJson();
-                    break;
-            }
+            JsonSerializer.SerializeList(people, "people.json");
         }
 
         public static void GetData()
@@ -149,6 +92,7 @@ namespace ConsoleApp2
             SaveData(people, userDisplayName, userAge, userGender);
             Program.Acknowledge(2);
         }
+
         public static void PrintAllData()
         {
             for (int i = 0; i < people.Count; i++)
